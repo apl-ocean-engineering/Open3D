@@ -702,6 +702,7 @@ list(APPEND Open3D_3RDPARTY_PUBLIC_TARGETS "${FMT_TARGET}")
 
 # CUDA Toolkit
 if(BUILD_CUDA_MODULE)
+    #enable_language(CUDA)
     find_package(CUDAToolkit)
     if(TARGET CUDA::toolkit)
         message(STATUS "Using installed third-party library CUDAToolkit")

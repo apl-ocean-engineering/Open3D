@@ -7,7 +7,14 @@ macro(add_cuda_source_group module_name)
     source_group("Source Files\\${module_name}" FILES ${MODULE_SOURCE_FILES})
 endmacro()
 
-find_package(CUDAToolkit REQUIRED)
+#enable_language(CUDA)
+find_package(CUDA REQUIRED)
+
+#list(APPEND CUDA_NVCC_FLAGS "-std=c++11 -rdc=true")
+set(CUDA_PROPAGATE_HOST_FLAGS OFF)
+#add_definitions(-std=c++11)
+
+set(CUDA_SEPARABLE_COMPILATION ON)
 
 # GLOB all required files in this subdirectory
 file(GLOB_RECURSE CUDA_ALL_HEADER_FILES "*.h")
@@ -60,6 +67,8 @@ open3d_set_global_properties(${OPEN3D_CUDA_MODULE})
 open3d_link_3rdparty_libraries(${OPEN3D_CUDA_MODULE})
 
 add_library(${PROJECT_NAME}::${OPEN3D_CUDA_MODULE} ALIAS ${OPEN3D_CUDA_MODULE})
+
+target_link_libraries(${OPEN3D_CUDA_MODULE} PUBLIC ${CUDA_LIBRARIES} -lcublas -lcurand)
 
 # Installation
 install(TARGETS ${OPEN3D_CUDA_MODULE} EXPORT ${OPEN3D_CUDA_MODULE}Targets

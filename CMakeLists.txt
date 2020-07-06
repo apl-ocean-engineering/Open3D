@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.8.0) # 3.8.0 to enable CUDA native support
 
 # Config options
-option(BUILD_SHARED_LIBS         "Build shared libraries"                   OFF)
+option(BUILD_SHARED_LIBS         "Build shared libraries"                   ON)
 option(WITH_OPENMP               "Use OpenMP multi-threading"               ON)
 option(ENABLE_HEADLESS_RENDERING "Use OSMesa for headless rendering"        OFF)
-option(BUILD_CPP_EXAMPLES        "Build the Open3D example programs"        ON)
+option(BUILD_CPP_EXAMPLES        "Build the Open3D example programs"        OFF)
 option(BUILD_CUDA_EXAMPLES       "Build the Open3D CUDA examples programs"  ON)
 option(BUILD_UNIT_TESTS          "Build the Open3D unit tests"              OFF)
 option(BUILD_GOOGLETEST          "Build googletest framework from source"   ON)
@@ -27,11 +27,11 @@ option(BUILD_TINYFILEDIALOGS     "Build tinyfiledialogs from source"        ON)
 option(BUILD_TINYGLTF            "Build TinyGLTF from source"               ON)
 option(BUILD_TINYOBJLOADER       "Build tinyobjloader from source"          ON)
 option(BUILD_QHULL               "Build qhull from source"                  ON)
-option(BUILD_CUDA_MODULE         "Build the CUDA module"                    OFF)
+option(BUILD_CUDA_MODULE         "Build the CUDA module"                    ON)
 option(BUILD_TENSORFLOW_OPS      "Build ops for Tensorflow"                 OFF)
 option(ENABLE_JUPYTER            "Enable Jupyter support for Open3D"        ON)
 option(STATIC_WINDOWS_RUNTIME    "Use static (MT/MTd) Windows runtime"      OFF)
-option(GLIBCXX_USE_CXX11_ABI     "Set -D_GLIBCXX_USE_CXX11_ABI=1"           OFF)
+option(GLIBCXX_USE_CXX11_ABI     "Set -D_GLIBCXX_USE_CXX11_ABI=1"           ON)
 
 # Cache variables for specifying the GPU architectures
 set(CUDA_ARCH "Auto" CACHE STRING "Selects GPU architectures for code generation, \
@@ -283,6 +283,7 @@ install(EXPORT ${PROJECT_NAME}Targets NAMESPACE ${PROJECT_NAME}:: DESTINATION ${
 export(EXPORT ${PROJECT_NAME}Targets NAMESPACE ${PROJECT_NAME}::)
 
 if(BUILD_CUDA_MODULE)
+    message("Installing CUDA includes")
     install(EXPORT Open3DCudaTargets NAMESPACE ${PROJECT_NAME}:: DESTINATION ${Open3D_INSTALL_CMAKE_DIR})
     export(EXPORT Open3DCudaTargets NAMESPACE ${PROJECT_NAME}::)
 endif()
